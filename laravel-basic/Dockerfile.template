@@ -1,0 +1,10 @@
+FROM jeanjung/fast-composer:%%BASE_IMAGE_TAG%%
+
+RUN curl -sL https://deb.nodesource.com/setup_%%NODE_VERSION%% | bash -\
+  && apt-get update \
+  && apt-get install -y %%INSTALL_PACKAGES%% nodejs \
+  && apt-get autoremove\
+  && apt-get autoclean
+
+RUN %%PHP_PACKAGES%%
+

@@ -3,6 +3,19 @@ services:
 script:
 - docker login -u $DOCKER_USER -p $DOCKER_PASS
 - "./fast-composer/build.sh 7.3-cli --push"
+- "./laravel-basic/build.sh 7.3-cli-ext_intl-ext_pdo-ext_zip --push"
+before_cache:
+  # Save tagged docker images
+  - >
+    mkdir -p $HOME/docker && docker images -a --filter='dangling=false' --format '{{.Repository}}:{{.Tag}} {{.ID}}'
+    | xargs -n 2 -t sh -c 'test -e $HOME/docker/$1.tar.gz || docker save $0 | gzip -2 > $HOME/docker/$1.tar.gz'
+before_install:
+  # Load cached docker images
+  - if [[ -d $HOME/docker ]]; then ls $HOME/docker/*.tar.gz | xargs -I {file} sh -c "zcat {file} | docker load"; fi
+cache:
+  bundler: true
+  directories:
+    - $HOME/docker
 env:
   global:
   - secure: MBRcjqEP0/WiCv79REuuUwrmiaM2UfzRitPEIpAO75qTGXGsud/Tpp5VnrYYpYc/dZOF1VjKOY3lchkirEJv/a3BhLMjsILnWe1E5cvuOKyKrMWVhD/ZE2C6zy6HteJOwa5NKwqiTXKEkERNrskoe7KLX2MjCbbwa5nTCVh30VktNXkKBR0RRy/iDt7O2c5kyBvLFQgd+lME+ZSI9dl1JEG35YAtjWj+xYDwGMkDiTLvb4ZtLInCoKKXXvhLTifL7lLAzQsqSQeMCRuOAA5dYgm7yAlTZNusPZZhLFv1dQ/ala7lAdzGJ5IODcE9VKxlEpg8C83WTo4PWGhtlzTvpiPuOApvupze8wjuVrUfoEeVODKNGsIVyB7+I9huNM6D+l5T2pbQERu5oK0mehN4NQ94pm1BOrob5TZ7lDbVW/gb6vTSYV7z2z2ISx55FFQCXcA0ikUy60Sv1iqmRlQcOs9TUu9/JncFIWT9K1cdT3zpM40Uf/cZHm8Y45oVCF+Fo3bhXsdkedtTWBwWEU6tpSD3CKEaFPn09VAvyp5jG8Iq8hqMy4VUD08ptYGfHPEVTeTZOEnjz/8zg6wmwx8cFUFa68e1FNe5P07xcWI6q0sn3ati/Fi72yRLKTKAQoy91vvMWm++bCzK3PUIZWUD/iIolXfBsfD7xAJAWGsOz5M=
