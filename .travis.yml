@@ -6,6 +6,7 @@ script:
 - "./fast-composer/build.sh 7.4-cli --push"
 - "./laravel-basic/build.sh 7.3-cli-ext_intl-ext_pdo-ext_zip --push"
 - "./laravel-basic/build.sh 7.4-cli-ext_intl-ext_pdo-ext_zip --push"
+- "./mysql-slim/build.sh 5.6 --push"
 before_cache:
   # Save tagged docker images
   - >
