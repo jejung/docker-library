@@ -4,9 +4,12 @@ script:
 - docker login -u $DOCKER_USER -p $DOCKER_PASS
 - "./fast-composer/build.sh 7.3-cli --push"
 - "./fast-composer/build.sh 7.4-cli --push"
+- "./fast-composer/build.sh 8.0-cli --push"
 - "./laravel-basic/build.sh 7.3-cli-ext_intl-ext_pdo-ext_zip --push"
 - "./laravel-basic/build.sh 7.4-cli-ext_intl-ext_pdo-ext_zip --push"
+- "./laravel-basic/build.sh 8.0-cli-ext_intl-ext_pdo-ext_zip --push"
 - "./mysql-slim/build.sh 5.6 --push"
+- "./mysql-slim/build.sh 5.7 --push"
 before_cache:
   # Save tagged docker images
   - >

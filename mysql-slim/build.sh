@@ -23,4 +23,3 @@ docker build -t $REPO:$TAG -f $DOCKERFILE .
 if [ "$PUSH" == "true" ]; then
   docker push $REPO;
 fi
-
