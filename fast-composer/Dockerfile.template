@@ -1,4 +1,9 @@
 FROM php:%%BASE_IMAGE_TAG%%
 
 RUN apt-get update && apt-get install -y git && apt-get -y autoremove && apt-get -y autoclean
-RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /bin/composer
+RUN curl -sS https://getcomposer.org/installer > get_composer.php \
+    && php get_composer.php --version=%%COMPOSER_VERSION%% \
+    && rm get_composer.php \
+    && mv composer.phar /bin/composer
+
+RUN composer self-update && %%INSTALL_PRESTISSIMO%%

@@ -9,9 +9,20 @@ export TAG=$1
 export REPO=jeanjung/$IMAGE_NAME
 export DOCKERFILE=Dockerfile-$TAG
 
+set -o allexport
+source .env
+source .env-$TAG
+set +o allexport
+
+echo $INSTALL_PRESTISSIMO
+
 echo travis_fold:start:docker-build-$IMAGE_NAME-$TAG
 
-sed -r -e "s!%%BASE_IMAGE_TAG%%!$TAG!" Dockerfile.template > $DOCKERFILE
+sed -r \
+  -e "s!%%BASE_IMAGE_TAG%%!$BASE_IMAGE_TAG!" \
+  -e "s!%%COMPOSER_VERSION%%!$COMPOSER_VERSION!" \
+  -e "s!%%INSTALL_PRESTISSIMO%%!$INSTALL_PRESTISSIMO!" \
+    Dockerfile.template > $DOCKERFILE
 
 docker build -t $REPO:$TAG -f $DOCKERFILE .
 
