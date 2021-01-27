@@ -11,7 +11,9 @@ script:
 - "./laravel-basic/build.sh 7.3-cli-composer2-ext_intl-ext_pdo-ext_zip --push"
 - "./laravel-basic/build.sh 7.4-cli-ext_intl-ext_pdo-ext_zip --push"
 - "./laravel-basic/build.sh 7.4-cli-composer2-ext_intl-ext_pdo-ext_zip --push"
+- "./laravel-basic/build.sh 7.4-cli-composer2-ext_intl-ext_pdo-ext_zip-ext_gmp --push"
 - "./laravel-basic/build.sh 8.0-cli-ext_intl-ext_pdo-ext_zip --push"
+- "./laravel-basic/build.sh 8.0-cli-ext_intl-ext_pdo-ext_zip-ex_gmp --push"
 - "./mysql-slim/build.sh 5.6 --push"
 - "./mysql-slim/build.sh 5.7 --push"
 before_cache:
